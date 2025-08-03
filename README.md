@@ -20,19 +20,18 @@ A clean, modern full-stack intern portal built using **Flask + HTML/CSS + Bootst
 ## 📸 Screenshots
 
 ### 🔐 Login Page
-![Login](<img width="1919" height="1015" alt="Screenshot 2025-08-03 223220" src="https://github.com/user-attachments/assets/b7aa153a-bbe9-41d0-b5bf-ddaf953034c9" />
-)
+![Login](assets/signup.png)
 
 ### 🆕 Sign Up Page
-![Signup](https://your-screenshot-link.com/signup.png)
+![Signup](assets/login.png)
 
 ### 📊 Dashboard
-![Dashboard](https://your-screenshot-link.com/dashboard.png)
+![Dashboard](assets/dashboard.png)
 
 ### 🏆 Leaderboard
-![Leaderboard](https://your-screenshot-link.com/leaderboard.png)
+![Leaderboard](assets/leadorboard.png)
 
-> Replace the above links with real screenshots uploaded to GitHub or [imgur.com](https://imgur.com)
+
 
 ---
 
@@ -53,7 +52,7 @@ A clean, modern full-stack intern portal built using **Flask + HTML/CSS + Bootst
 │   ├── signup.html
 │   ├── dashboard.html
 │   └── leaderboard.html
-└── static/ (optional if using custom CSS/JS)
+
 ```
 
 ---
@@ -103,8 +102,8 @@ A clean, modern full-stack intern portal built using **Flask + HTML/CSS + Bootst
 
 > You can use these for demo purposes:
 
-- **Email:** `shyam@example.com`  
-- **Password:** `password`
+- **Email:** `intern@gmail.com`  
+- **Password:** `1234`
 
 ---
 
