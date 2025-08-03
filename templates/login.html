@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Intern Portal</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+      padding: 2rem;
+    }
+
+    .form-label {
+      font-weight: 500;
+    }
+
+    .form-control:focus {
+      box-shadow: 0 0 0 0.2rem rgba(98, 0, 238, 0.25);
+    }
+
+    .login-btn {
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      border: none;
+      color: white;
+      font-weight: 600;
+    }
+
+    .signup-link {
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <h3 class="text-center mb-4">Welcome Back Intern</h3>
+    
+    {% if error %}
+      <div class="alert alert-danger text-center">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST" action="/login">
+      <div class="mb-3">
+        <label for="email" class="form-label">Email address</label>
+<input type="email" class="form-control" id="email" name="email" required />
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="password" required />
+      </div>
+      <button type="submit" class="btn login-btn w-100">Login</button>
+    </form>
+
+    <p class="text-center mt-3 signup-link">
+      Don't have an account? <a href="/signup">Sign up here</a>
+    </p>
+  </div>
+</body>
+</html>

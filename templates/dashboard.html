@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Intern Dashboard</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- AOS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Lottie -->
+  <script src="https://unpkg.com/lottie-web@5.7.4/build/player/lottie.min.js"></script>
+
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #fdfbfb, #ebedee);
+      font-family: 'Segoe UI', sans-serif;
+      color: #333;
+    }
+    .card {
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+    }
+    .card h5 {
+      font-weight: 600;
+    }
+    .progress-bar {
+      font-weight: bold;
+    }
+    .section-title {
+      color: #0077b6;
+      font-weight: 600;
+    }
+    .list-group-item {
+      background-color: #f9f9f9;
+      border: none;
+      border-bottom: 1px solid #eee;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary py-3 shadow">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold fs-4" href="#"><i class="bi bi-person-badge-fill me-2"></i>Intern Portal</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="btn btn-light text-primary fw-semibold me-3" href="#">
+              <i class="bi bi-speedometer2 me-1"></i>Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-outline-light me-2" href="/leaderboard">
+              <i class="bi bi-trophy me-1"></i>Leaderboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-outline-light" href="/logout">
+              <i class="bi bi-box-arrow-right me-1"></i>Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="container py-5">
+
+    <!-- Lottie -->
+    <div id="greeting-animation" style="height: 120px; width: 120px; margin: auto;" data-aos="zoom-in"></div>
+
+    <!-- Intern Info Cards -->
+    <div class="row g-4 mt-4">
+      <div class="col-md-4" data-aos="fade-up">
+        <div class="card text-center p-4">
+          <h5><i class="bi bi-person-circle me-2 text-primary"></i>Intern Name</h5>
+          <p id="name" class="fs-5 fw-bold text-dark">Loading...</p>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="card text-center p-4">
+          <h5><i class="bi bi-link-45deg me-2 text-success"></i>Referral Code</h5>
+          <p id="referral" class="fs-5 fw-bold text-success">Loading...</p>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="card text-center p-4">
+          <h5><i class="bi bi-currency-rupee me-2 text-danger"></i>Total Donations</h5>
+          <p id="donations" class="fs-5 fw-bold text-danger">Loading...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress -->
+    <div class="mt-5" data-aos="fade-up">
+      <h4 class="section-title"><i class="bi bi-graph-up-arrow me-2"></i>Progress Towards Goal (₹20,000)</h4>
+      <div class="progress mt-3" style="height: 30px;">
+        <div class="progress-bar bg-success" id="progress-bar" role="progressbar" style="width: 0%">0%</div>
+      </div>
+    </div>
+
+    <!-- Rewards -->
+    <div class="mt-5" data-aos="fade-up">
+      <h4 class="section-title"><i class="bi bi-gift-fill me-2"></i>Rewards & Unlockables</h4>
+      <ul class="list-group mt-2">
+        <li class="list-group-item"><i class="bi bi-award-fill text-warning me-2"></i>₹5,000 Raised – Bronze Badge</li>
+        <li class="list-group-item"><i class="bi bi-award-fill text-secondary me-2"></i>₹10,000 Raised – Silver Badge</li>
+        <li class="list-group-item"><i class="bi bi-trophy-fill text-warning me-2"></i>₹20,000 Raised – Gold Trophy</li>
+      </ul>
+    </div>
+
+    <!-- Chart -->
+    <div class="mt-5" data-aos="fade-up">
+      <h4 class="section-title"><i class="bi bi-pie-chart-fill me-2"></i>Donation Progress Chart</h4>
+      <div class="d-flex justify-content-center mt-3">
+        <div style="width: 300px; height: 300px;">
+          <canvas id="donationChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS Includes -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init();
+
+    // Lottie animation
+    lottie.loadAnimation({
+      container: document.getElementById('greeting-animation'),
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: 'https://lottie.host/946e80fa-4bc5-4c3c-bfd1-2b6f05b308f0/ZOW11aj6pC.json'
+    });
+
+    // Fetch user data from Flask backend
+    fetch("/api/user")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("name").innerText = data.name;
+        document.getElementById("referral").innerText = data.referral;
+        document.getElementById("donations").innerText = "₹" + data.donations;
+
+        const target = 20000;
+        const percent = Math.min((data.donations / target) * 100, 100);
+        const bar = document.getElementById("progress-bar");
+        bar.style.width = percent + "%";
+        bar.innerText = Math.floor(percent) + "%";
+
+        const ctx = document.getElementById("donationChart");
+        new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: ['Donated', 'Remaining'],
+            datasets: [{
+              data: [data.donations, target - data.donations],
+              backgroundColor: ['#198754', '#dee2e6']
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { position: 'bottom' }
+            }
+          }
+        });
+      });
+  </script>
+</body>
+</html>
